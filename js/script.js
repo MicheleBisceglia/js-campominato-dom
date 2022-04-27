@@ -17,13 +17,39 @@ function Game() {
     const newItem =generatorGridItem(i)
     newItem.addEventListener("click" , handleCellClick);
     grid.append(newItem)
-    
-
    }
+
+   //Generare 16 bombe
+    const bombsNumber = 16;
+    const bombsArray = generateRndBombs(bombsNumber,100)
+    const safeCells = [] ;
+
+    for (let i = 1; i <= 100; i++) {
+        const newItem = generatorGridItem(i, 10);
+
+        newItem.addEventListener("click", handleCellClick);
+        grid.append(newItem)
+    }
+
+    /*function generateRndBombs () {
+    Math.floor(Math.random()*16)
+    } */
+    
    //assegno le classi al click del grid item
     function handleCellClick() {
-        this.classList.add("active")
-    }
+        //prelevare il numero cliccato
+        const clickNumber = parseInt(this.querySelector("span").textcontent);
+
+        //la cella diventa rossa
+        if ( bombsArray.includes(clickNumber) ) {
+            this.classList.add("red");
+            alert("Hai perso!");
+        }else {
+            //la cella diventa azzurra
+        this.classList.add("active");
+        safeCells.push(clickNumber);
+        console.log(safeCells);
+        }
 
 }
 
@@ -36,3 +62,4 @@ gridItem.innerHTML = `<span>${gridNumber}</span>`
 return gridItem
 }
 
+}

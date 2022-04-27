@@ -59,6 +59,9 @@ main {
 .active {
     background-color:#6495ed;
 }
+.red {
+    background-color: red;
+}
 
 .hidden {
     display: none;
