@@ -5,6 +5,12 @@ const startBtn = document.getElementById("start-btn");
 
 // MAIN FUNCTION
 function Game() {
+    //Generare 16 bombe
+    const bombsNumber = 16;
+    const bombsArray = generateRndBombs(bombsNumber,100)
+    const safeCells = [] ;
+    const maxNumber = 100;
+
     // Genero numeri da 1 a 100
     const title = document.getElementById("title");
     //Creo un grid item per ogni numero 
@@ -18,12 +24,7 @@ function Game() {
     newItem.addEventListener("click" , handleCellClick);
     grid.append(newItem)
    }
-
-   //Generare 16 bombe
-    const bombsNumber = 16;
-    const bombsArray = generateRndBombs(bombsNumber,100)
-    const safeCells = [] ;
-
+    
     for (let i = 1; i <= 100; i++) {
         const newItem = generatorGridItem(i, 10);
 
@@ -31,15 +32,29 @@ function Game() {
         grid.append(newItem)
     }
 
-    /*function generateRndBombs () {
-    Math.floor(Math.random()*16)
-    } */
+    function generateRndBombs(maxLimit) {
+        const numbersArray = [];
+        while (numbersArray.length < 16) {
+            const randomNumber = getRndInteger (1, maxLimit)
+            if ( !numbersArray.includes(randomNumber)) {
+                numbersArray.push(randomNumber);
+            }
+        }
+        return numbersArray
+    }
     
+    const generateArray = generateRndBombs (16 ,100);
+    console.log(generateArray);
+    
+    function getRndInteger(min,max) {
+        return Math.floor(Math.random() * (max - min +1) ) + min;
+    }
    //assegno le classi al click del grid item
     function handleCellClick() {
         //prelevare il numero cliccato
-        const clickNumber = parseInt(this.querySelector("span").textcontent);
-
+        const clickNumber = parseInt(this.querySelector(".selectNumber").textcontent);
+        console.log(clickNumber);
+        
         //la cella diventa rossa
         if ( bombsArray.includes(clickNumber) ) {
             this.classList.add("red");
@@ -57,9 +72,10 @@ function generatorGridItem(gridNumber){
 
 const gridItem = document.createElement("div");
 gridItem.classList.add("grid-item");
-gridItem.innerHTML = `<span>${gridNumber}</span>`
+gridItem.innerHTML = `<span class ="selectNumber">${gridNumber}</span>`
 
 return gridItem
 }
 
 }
+
